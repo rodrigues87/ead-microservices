@@ -31,3 +31,17 @@
 
 ##Para não mostrar erros
     private static final long serialVersionUID = 1L;
+
+
+##Copiando valores de atributo do userDto para userModel
+    BeanUtils.copyProperties(userDto, userModel);
+
+#REPOSITORY
+##Verificando existencia 
+    boolean existsByUsername(String username);
+
+##OBSERVAÇÕES
+    * Pude perceber que os dtos estao sendo criados com os mesmos 
+    atributos da classe modelo,não seria melhor criar a classe 
+    dto e na classe modelo herdar os atributos do dto?
+
