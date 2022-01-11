@@ -40,6 +40,17 @@
 ##Verificando existencia 
     boolean existsByUsername(String username);
 
+#VALIDAÇÃO
+    @NotBlank - Não permite valores vazios e nulos
+    @NotNull - Não permite valores nulos 
+    @NotEmpty - Não permite valores nulos e o tamanho tem q ser > 0
+    @Email - Verifica se o texto digitado segue o padrão de email
+
+#JSONVIEW 
+    É UMA BIBLIOTECA PARA INTERCEPTAÇÃO DOS JSONS ENVIADOS E RECEBIDOS NO PROJETO
+    PARA USÁ-LO É NECESSÁRIO CRIAR UMA INTERFASSE PARA MEDIAR AS RELAÇÕES DOS ATRIBUTOS COM O DTO
+    EM SEGUIDA, É NECESSÁRIO ASSINAR (DECORAR) O ATRIBUTO COM A INTEFASSE ADEQUADA
+
 ##OBSERVAÇÕES
     * Pude perceber que os dtos estao sendo criados com os mesmos 
     atributos da classe modelo,não seria melhor criar a classe 
