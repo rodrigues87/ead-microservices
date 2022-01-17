@@ -2,6 +2,7 @@ package com.ead.course.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -37,4 +39,8 @@ public class LessonModel implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime creationDate;
+
+    @ManyToOne(optional = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private ModuleModel module;
 }

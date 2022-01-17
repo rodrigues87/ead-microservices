@@ -26,6 +26,14 @@
     @JsonIgnore
     private String password;
 
+    OU
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
+    
+    @JsonIgnore ignora completamente o atributo, já JsonProperty oculta apenas leitura ou escrita ou leitura/escrita
+    caso @JsonIgnore JsonProperty estejam juntos @JsonIgnore irá ignorar prevalecer
+    
 ##
     @CrossOrigin(origins = "*", maxAge = 3600)
 
@@ -50,6 +58,21 @@
     É UMA BIBLIOTECA PARA INTERCEPTAÇÃO DOS JSONS ENVIADOS E RECEBIDOS NO PROJETO
     PARA USÁ-LO É NECESSÁRIO CRIAR UMA INTERFASSE PARA MEDIAR AS RELAÇÕES DOS ATRIBUTOS COM O DTO
     EM SEGUIDA, É NECESSÁRIO ASSINAR (DECORAR) O ATRIBUTO COM A INTEFASSE ADEQUADA
+
+##SET E LIST
+    SET- 
+        *NÃO É ORDENADO
+        *NÃO PERMITE DUPLICATAS
+        *AO CONSULTAR RETORNA APENAS A PRIMEIRA
+    LIST- 
+        *É ORDENADO
+        *PERMITE DUPLICATAS
+        *AO CONSULTAR RETORNA TODAS AS CONSULTAS
+
+##RELACIONAMENTOS
+    *É recomendado fazer um direcionamento bidirecional, apontando sempre o relatedBy=""
+        *diminui o numero de consultas do hibernate
+        *evita a criação de tabelas auxiliares desnecessárias
 
 ##OBSERVAÇÕES
     * Pude perceber que os dtos estao sendo criados com os mesmos 
