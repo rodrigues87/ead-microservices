@@ -47,6 +47,7 @@
 #REPOSITORY
 ##Verificando existencia 
     boolean existsByUsername(String username);
+    @Modifying permite a execução de comandos de delete/update/create
 
 #VALIDAÇÃO
     @NotBlank - Não permite valores vazios e nulos
@@ -74,8 +75,32 @@
         *diminui o numero de consultas do hibernate
         *evita a criação de tabelas auxiliares desnecessárias
 
+    QUANDO?
+        @OneToMany(mappedBy = "module", fetch = FetchType.LAZY)
+            *EAGER - Padrão por default, retorna o objeto ou lista automaticamente (carregamento ansioso)
+            *LAZY - Apenas retorna caso seja solicitado (carregamento lento)
+            é recomendado trazer os dados de forma lenta
+    COMO?
+        @Fetch(FetchMode.SUBSELECT) - Divide a consulta em 2 partes, objeto principal e lista
+        @Fetch(FetchMode.SELECT) - Faz selects para cada entidade no banco
+        @Fetch(FetchMode.JOIN) - Reune toda a consulta em um unico comando  e ignora o lazy caso esteja setado(cuidado)
+
+    @OnDelete(action = OnDeleteAction.CASCADE)
+        Delega ao banco de dados a reponsabilidade de deletar as entidades relacionadas
+
+    
+
 ##OBSERVAÇÕES
     * Pude perceber que os dtos estao sendo criados com os mesmos 
     atributos da classe modelo,não seria melhor criar a classe 
     dto e na classe modelo herdar os atributos do dto?
 
+    
+    define a forma como o dado vai ser buscado
+        select: 
+        join:
+        subselect:
+
+##SERVICE
+    AO DECORAR O MÉTODO COM @Transactional GARANTIMOS QUE O MÉTODO IRÁ RETORNAR CASO HAJA ALGUM PROBLEMA NA PERSISTENCIA
+    É INTERESSANTE USAR NO MOMENTO DE DELETAR ENTIDADES COM RELACIONAMENTO UM PARA MUITOS

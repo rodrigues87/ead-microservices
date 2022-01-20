@@ -40,7 +40,7 @@ public class LessonModel implements Serializable {
     @Column(nullable = false)
     private LocalDateTime creationDate;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ModuleModel module;
 }

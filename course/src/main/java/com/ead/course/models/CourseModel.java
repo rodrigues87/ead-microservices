@@ -9,6 +9,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -54,8 +58,13 @@ public class CourseModel implements Serializable {
     @Column(nullable = false)
     private UUID userInstructor;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course",fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Fetch(FetchMode.SUBSELECT)
     private Set<ModuleModel> modules;
+
+
+
+
 
 }
