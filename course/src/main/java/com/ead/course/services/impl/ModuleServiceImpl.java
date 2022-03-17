@@ -1,11 +1,9 @@
 package com.ead.course.services.impl;
 
-import com.ead.course.models.CourseModel;
 import com.ead.course.models.LessonModel;
 import com.ead.course.models.ModuleModel;
 import com.ead.course.repositories.LessonRepository;
 import com.ead.course.repositories.ModuleRepository;
-import com.ead.course.services.LessonService;
 import com.ead.course.services.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,12 +24,12 @@ public class ModuleServiceImpl implements ModuleService {
     LessonRepository lessonRepository;
 
     public List<ModuleModel> findAllByCourseCourseId(UUID uuid){
-        return moduleRepository.findAllByCourseCourseId(uuid);
+        return moduleRepository.findAllByCourseId(uuid);
     }
 
     @Override
     public List<ModuleModel> findModuleModelByCourseCourseId(UUID uui) {
-        return moduleRepository.findModuleModelByCourseCourseId(uui);
+        return moduleRepository.findAllByCourseId(uui);
     }
 
     @Override

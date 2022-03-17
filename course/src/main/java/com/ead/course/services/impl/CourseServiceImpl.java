@@ -33,7 +33,7 @@ public class CourseServiceImpl implements CourseService {
         Set<ModuleModel> models = courseModel.getModules();
         if(!models.isEmpty()){
             for (ModuleModel moduleModel : models){
-                List<LessonModel> lessonModels = lessonRepository.findLessonModelsByModule_ModuleId(moduleModel.getModuleId());
+                List<LessonModel> lessonModels = lessonRepository.findLessonModelsById(moduleModel.getId());
 
                 if(!lessonModels.isEmpty()){
                     lessonRepository.deleteAll(lessonModels);

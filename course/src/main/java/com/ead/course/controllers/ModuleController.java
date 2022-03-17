@@ -1,7 +1,9 @@
 package com.ead.course.controllers;
 
 import com.ead.course.dtos.ModuleDto;
+import com.ead.course.ferramentas.Constantes;
 import com.ead.course.models.ModuleModel;
+import com.ead.course.services.CourseService;
 import com.ead.course.services.ModuleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,22 +20,32 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/modules")
+@RequestMapping("/courses/{courseId}/modules")
 public class ModuleController {
 
     @Autowired
     ModuleService moduleService;
 
-    @PostMapping
-    public ResponseEntity<Object> saveModule(@RequestBody @Valid ModuleDto moduleDto){
-        var moduleModel = new ModuleModel();
+    @Autowired
+    CourseService courseService;
 
-        BeanUtils.copyProperties(moduleDto,moduleModel);
-        moduleModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
-        moduleModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
+    @PostMapping
+    public ResponseEntity<Object> saveModule(@RequestBody @Valid ModuleDto moduleDto, @PathVariable UUID courseId){
+
+        var moduleModel = new ModuleModel();
+        moduleModel.aplicarDto(moduleDto);
+
+        var courseModel = courseService.findById(courseId);
+
+        if(courseModel.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constantes.CURSO_NAO_ENCONTRADO);
+        }
+
+        moduleModel.setCourse(courseModel.get());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(moduleService.save(moduleModel));
     }
+    
 
     @DeleteMapping("/{moduleId}")
     public ResponseEntity<Object> deleteModule(@PathVariable(value = "moduleId")UUID moduleId){
@@ -42,12 +54,12 @@ public class ModuleController {
 
         if(moduleModel.isEmpty()){
 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Curso não encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constantes.MODULO_NAO_ENCONTRADO);
         }
 
         moduleService.delete(moduleModel.get());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("Curso deletado com sucesso");
+        return ResponseEntity.status(HttpStatus.CREATED).body(Constantes.MODULO_DELETADO);
     }
 
 
@@ -57,13 +69,10 @@ public class ModuleController {
         Optional<ModuleModel> moduleModel = moduleService.findById(moduleId);
 
         if(moduleModel.isEmpty()){
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Curso não encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constantes.MODULO_NAO_ENCONTRADO);
         }
 
-        BeanUtils.copyProperties(moduleDto, moduleModel);
-
-        moduleModel.get().setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
+        moduleModel.get().aplicarDto(moduleDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(moduleService.save(moduleModel.get()));
     }
@@ -81,7 +90,7 @@ public class ModuleController {
 
         if(moduleModel.isEmpty()){
 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Curso não encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constantes.CURSO_NAO_ENCONTRADO);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(moduleModel);

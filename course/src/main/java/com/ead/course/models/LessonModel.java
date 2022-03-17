@@ -1,6 +1,6 @@
 package com.ead.course.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ead.course.controllers.AbstractEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -8,11 +8,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Set;
-import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 
 @Getter
 @Setter
@@ -20,12 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-public class LessonModel implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID lessonId;
+public class LessonModel extends AbstractEntity {
 
     @Column(nullable = false, length = 150)
     private String title;
@@ -35,10 +29,6 @@ public class LessonModel implements Serializable {
 
     @Column(nullable = false)
     private String videoUrl;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    @Column(nullable = false)
-    private LocalDateTime creationDate;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

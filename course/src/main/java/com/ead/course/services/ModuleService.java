@@ -1,8 +1,6 @@
 package com.ead.course.services;
 
 import com.ead.course.models.ModuleModel;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;

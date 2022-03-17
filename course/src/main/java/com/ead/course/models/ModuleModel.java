@@ -1,7 +1,8 @@
 package com.ead.course.models;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ead.course.controllers.AbstractEntity;
+import com.ead.course.dtos.ModuleDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -10,12 +11,10 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Set;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -23,26 +22,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-public class ModuleModel implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID moduleId;
+public class ModuleModel extends AbstractEntity {
 
     @Column(nullable = false, length = 150)
     private String title;
 
     @Column(nullable = false, length = 250)
     private String description;
-
-    @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime creationDate;
-
-    @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime lastUpdateDate;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -52,4 +38,5 @@ public class ModuleModel implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Fetch(FetchMode.SUBSELECT)
     private Set<LessonModel> lessons;
+
 }

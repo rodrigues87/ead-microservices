@@ -2,6 +2,7 @@ package com.ead.course.controllers;
 
 
 import com.ead.course.dtos.CourseDto;
+import com.ead.course.ferramentas.Constantes;
 import com.ead.course.models.CourseModel;
 import com.ead.course.services.CourseService;
 import org.springframework.beans.BeanUtils;
@@ -30,8 +31,6 @@ public class CourseController {
         var courseModel = new CourseModel();
 
         BeanUtils.copyProperties(courseDto,courseModel);
-        courseModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
-        courseModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(courseService.save(courseModel));
     }
@@ -43,7 +42,7 @@ public class CourseController {
 
         if(courseModel.isEmpty()){
 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Curso não encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constantes.CURSO_NAO_ENCONTRADO);
         }
 
         courseService.delete(courseModel.get());
