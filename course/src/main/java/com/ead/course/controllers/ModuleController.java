@@ -5,15 +5,13 @@ import com.ead.course.ferramentas.Constantes;
 import com.ead.course.models.ModuleModel;
 import com.ead.course.services.CourseService;
 import com.ead.course.services.ModuleService;
-import org.springframework.beans.BeanUtils;
+import com.ead.course.services.impl.CourseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,6 +25,9 @@ public class ModuleController {
     ModuleService moduleService;
 
     @Autowired
+    CourseServiceImpl courseServiceImpl;
+
+    @Autowired
     CourseService courseService;
 
     @PostMapping
@@ -35,7 +36,7 @@ public class ModuleController {
         var moduleModel = new ModuleModel();
         moduleModel.aplicarDto(moduleDto);
 
-        var courseModel = courseService.findById(courseId);
+        var courseModel = courseServiceImpl.findById(courseId);
 
         if(courseModel.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constantes.CURSO_NAO_ENCONTRADO);

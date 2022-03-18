@@ -1,14 +1,12 @@
 package com.ead.course.controllers;
 
 
-import com.ead.course.dtos.ModuleDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
