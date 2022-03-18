@@ -1,9 +1,12 @@
-package com.ead.course.services.impl;
+package com.ead.course.services;
 
 import com.ead.course.controllers.AbstractEntity;
+import com.ead.course.dtos.CourseDto;
+import com.ead.course.models.ModuleModel;
 import javassist.tools.rmi.ObjectNotFoundException;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public abstract class AbstractService<T> {
@@ -24,4 +27,7 @@ public abstract class AbstractService<T> {
 
         this.findById(obj.getId());
     }
+
+    public abstract void deleteAll(Set<T> models);
+
 }

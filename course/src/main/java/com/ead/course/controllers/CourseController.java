@@ -2,9 +2,10 @@ package com.ead.course.controllers;
 
 
 import com.ead.course.dtos.CourseDto;
-import com.ead.course.ferramentas.Constantes;
 import com.ead.course.models.CourseModel;
 import com.ead.course.services.CourseService;
+import javassist.tools.rmi.ObjectNotFoundException;
+import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,10 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -27,45 +25,32 @@ public class CourseController {
     CourseService courseService;
 
     @PostMapping
-    public ResponseEntity<Object> saveCourse(@RequestBody @Valid CourseDto courseDto){
-        var courseModel = new CourseModel();
+    public ResponseEntity<Object> saveCourse(@RequestBody @Valid CourseDto courseDto) {
 
+        var courseModel = new CourseModel();
         BeanUtils.copyProperties(courseDto,courseModel);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(courseService.save(courseModel));
     }
 
     @DeleteMapping("/{courseId}")
-    public ResponseEntity<Object> deleteCourse(@PathVariable(value = "courseId")UUID courseId){
+    @SneakyThrows
+    public ResponseEntity<Object> deleteCourse(@PathVariable(value = "courseId")UUID courseId)  {
 
-        Optional<CourseModel> courseModel = courseService.findById(courseId);
-
-        if(courseModel.isEmpty()){
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constantes.CURSO_NAO_ENCONTRADO);
-        }
-
-        courseService.delete(courseModel.get());
+        courseService.delete(courseId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Curso deletado com sucesso");
     }
 
 
     @PutMapping("/{courseId}")
+    @SneakyThrows
     public ResponseEntity<Object> updateCourse(@PathVariable(value = "courseId")UUID courseId, @RequestBody @Valid CourseDto courseDto){
 
-        Optional<CourseModel> courseModel = courseService.findById(courseId);
-
-        if(courseModel.isEmpty()){
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Curso não encontrado");
-        }
-
+        CourseModel courseModel = courseService.findById(courseId);
         BeanUtils.copyProperties(courseDto, courseModel);
 
-        courseModel.get().setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
-
-        return ResponseEntity.status(HttpStatus.OK).body(courseService.save(courseModel.get()));
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.save(courseModel));
     }
 
     @GetMapping
@@ -75,14 +60,10 @@ public class CourseController {
     }
 
     @GetMapping("/{courseId}")
+    @SneakyThrows
     public ResponseEntity<Object> getOneCourse(@PathVariable(value = "courseId")UUID courseId){
 
-        Optional<CourseModel> courseModel = courseService.findById(courseId);
-
-        if(courseModel.isEmpty()){
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Curso não encontrado");
-        }
+        CourseModel courseModel = courseService.findById(courseId);
 
         return ResponseEntity.status(HttpStatus.OK).body(courseModel);
     }
