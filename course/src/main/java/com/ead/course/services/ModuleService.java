@@ -2,7 +2,6 @@ package com.ead.course.services;
 
 import com.ead.course.ferramentas.Constantes;
 import com.ead.course.models.ModuleModel;
-import com.ead.course.repositories.LessonRepository;
 import com.ead.course.repositories.ModuleRepository;
 import javassist.tools.rmi.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +41,7 @@ public class ModuleService extends AbstractService<ModuleModel>{
     @Override
     public void delete(UUID id) throws ObjectNotFoundException {
 
+
         findById(id);
         moduleRepository.deleteById(id);
     }
@@ -55,5 +55,9 @@ public class ModuleService extends AbstractService<ModuleModel>{
     public void deleteAll(Set<ModuleModel> models) {
         moduleRepository.deleteAll(models);
 
+    }
+
+    public Object findAllModulesFromCourse(UUID courseId) {
+        return moduleRepository.findModuleModelsByCourseId(courseId);
     }
 }

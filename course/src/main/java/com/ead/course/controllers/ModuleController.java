@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/courses/{courseId}/modules")
+@RequestMapping("")
 public class ModuleController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class ModuleController {
     CourseService courseService;
 
 
-    @PostMapping
+    @PostMapping("/courses/{courseId}/modules")
     @SneakyThrows
     public ResponseEntity<Object> saveModule(@RequestBody @Valid ModuleDto moduleDto, @PathVariable UUID courseId){
 
@@ -44,9 +44,11 @@ public class ModuleController {
     }
     
 
-    @DeleteMapping("/{moduleId}")
+    @DeleteMapping("/courses/{courseId}/modules/{moduleId}")
     @SneakyThrows
-    public ResponseEntity<Object> deleteModule(@PathVariable(value = "moduleId")UUID moduleId){
+    public ResponseEntity<Object> deleteModule(@PathVariable(value = "moduleId")UUID moduleId, @PathVariable UUID courseId){
+
+        courseService.findById(courseId);
 
         moduleService.delete(moduleId);
 
@@ -54,7 +56,7 @@ public class ModuleController {
     }
 
 
-    @PutMapping("/{moduleId}")
+    @PutMapping("/courses/{courseId}/modules/{moduleId}")
     @SneakyThrows
     public ResponseEntity<Object> updateModule(@PathVariable(value = "moduleId")UUID moduleId, @RequestBody @Valid ModuleDto moduleDto){
 
@@ -64,15 +66,21 @@ public class ModuleController {
         return ResponseEntity.status(HttpStatus.OK).body(moduleService.update(moduleModel));
     }
 
-    @GetMapping
+    @GetMapping("/modules")
     public ResponseEntity<List<ModuleModel>> getAllModules(){
 
         return ResponseEntity.status(HttpStatus.OK).body(moduleService.findAll());
     }
 
-    @GetMapping("/{moduleId}")
+    @GetMapping("/modules/{moduleId}")
     public ResponseEntity<Object> getOneModule(@PathVariable(value = "moduleId")UUID moduleId) throws ObjectNotFoundException {
 
         return ResponseEntity.status(HttpStatus.OK).body(moduleService.findById(moduleId));
+    }
+
+    @GetMapping("/courses/{courseId}/modules")
+    public ResponseEntity<Object> getAllModulesFromCourse(@PathVariable UUID courseId){
+
+        return ResponseEntity.status(HttpStatus.OK).body(moduleService.findAllModulesFromCourse(courseId));
     }
 }

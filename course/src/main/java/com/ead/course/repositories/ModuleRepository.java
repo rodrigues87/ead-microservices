@@ -15,4 +15,6 @@ public interface ModuleRepository extends JpaRepository<ModuleModel, UUID> {
     List<ModuleModel> findAllByCourseId (UUID courseId);
 
     List<ModuleModel> findModuleModelByCourseId(UUID uui);
+
+    List<ModuleModel> findModuleModelsByCourseId(UUID courseId);
 }
