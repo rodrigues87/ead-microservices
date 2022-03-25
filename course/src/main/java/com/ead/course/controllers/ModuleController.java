@@ -28,6 +28,11 @@ public class ModuleController {
     @Autowired
     CourseService courseService;
 
+    @GetMapping("/courses/{courseId}/modules")
+    public ResponseEntity<Object> getAllModulesFromCourse(@PathVariable UUID courseId){
+        courseService.findById(courseId);
+        return ResponseEntity.status(HttpStatus.OK).body(moduleService.findAllModulesFromCourse(courseId));
+    }
 
     @PostMapping("/courses/{courseId}/modules")
     @SneakyThrows
@@ -42,29 +47,7 @@ public class ModuleController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(moduleService.save(moduleModel));
     }
-    
 
-    @DeleteMapping("/courses/{courseId}/modules/{moduleId}")
-    @SneakyThrows
-    public ResponseEntity<Object> deleteModule(@PathVariable(value = "moduleId")UUID moduleId, @PathVariable UUID courseId){
-
-        courseService.findById(courseId);
-
-        moduleService.delete(moduleId);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(Constantes.MODULO_DELETADO);
-    }
-
-
-    @PutMapping("/courses/{courseId}/modules/{moduleId}")
-    @SneakyThrows
-    public ResponseEntity<Object> updateModule(@PathVariable(value = "moduleId")UUID moduleId, @RequestBody @Valid ModuleDto moduleDto){
-
-        ModuleModel moduleModel = moduleService.findById(moduleId);
-        moduleModel.aplicarDto(moduleDto);
-
-        return ResponseEntity.status(HttpStatus.OK).body(moduleService.update(moduleModel));
-    }
 
     @GetMapping("/modules")
     public ResponseEntity<List<ModuleModel>> getAllModules(){
@@ -78,9 +61,24 @@ public class ModuleController {
         return ResponseEntity.status(HttpStatus.OK).body(moduleService.findById(moduleId));
     }
 
-    @GetMapping("/courses/{courseId}/modules")
-    public ResponseEntity<Object> getAllModulesFromCourse(@PathVariable UUID courseId){
+    @DeleteMapping("/modules/{moduleId}")
+    @SneakyThrows
+    public ResponseEntity<Object> deleteModule(@PathVariable(value = "moduleId")UUID moduleId){
 
-        return ResponseEntity.status(HttpStatus.OK).body(moduleService.findAllModulesFromCourse(courseId));
+        moduleService.delete(moduleId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(Constantes.MODULO_DELETADO);
     }
+
+    @PutMapping("/modules/{moduleId}")
+    @SneakyThrows
+    public ResponseEntity<Object> updateModule(@PathVariable(value = "moduleId")UUID moduleId, @RequestBody @Valid ModuleDto moduleDto){
+
+        ModuleModel moduleModel = moduleService.findById(moduleId);
+        moduleModel.aplicarDto(moduleDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(moduleService.update(moduleModel));
+    }
+
+
 }

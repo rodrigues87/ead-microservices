@@ -1,9 +1,11 @@
 package com.ead.course.error;
 
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class ObjetcNotFound extends ErrorDetail {
 
 

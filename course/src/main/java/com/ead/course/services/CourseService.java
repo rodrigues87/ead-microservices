@@ -8,10 +8,12 @@ import com.ead.course.repositories.CourseRepository;
 import com.ead.course.repositories.LessonRepository;
 import javassist.tools.rmi.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -58,9 +60,14 @@ public class CourseService extends AbstractService<CourseModel> {
         courseRepository.delete(courseModel);
     }
 
+    @SneakyThrows
     @Override
-    public CourseModel findById(UUID id) throws ObjectNotFoundException {
-        return courseRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(Constantes.CURSO_NAO_ENCONTRADO));
+    public CourseModel findById(UUID id) {
+        Optional<CourseModel> courseModel =  courseRepository.findById(id);
+        if(courseModel.isEmpty()){
+            throw new RuntimeException(Constantes.CURSO_NAO_ENCONTRADO);
+        }
+        return courseModel.get();
     }
 
     @Override
