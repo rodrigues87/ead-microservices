@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NonNull;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -15,4 +16,6 @@ public class LessonDto implements Serializable {
     private final String description;
     @NonNull
     private final String videoUrl;
+
+    private LocalDateTime creationDate;
 }
