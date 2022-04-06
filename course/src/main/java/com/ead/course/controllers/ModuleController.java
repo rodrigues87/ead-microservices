@@ -34,14 +34,16 @@ public class ModuleController {
     CourseService courseService;
 
     @GetMapping("/courses/{courseId}/modules")
-    public ResponseEntity<Object> getAllModulesFromCourse(@PathVariable UUID courseId){
+    public ResponseEntity<Page<ModuleModel>> getAllModulesFromCourse(@PathVariable UUID courseId,
+                                                          SpecificationTemplate.ModuleSpec spec,
+                                                          @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         courseService.findById(courseId);
-        return ResponseEntity.status(HttpStatus.OK).body(moduleService.findAllModulesFromCourse(courseId));
+        return ResponseEntity.status(HttpStatus.OK).body(moduleService.findAllModulesFromCourse(SpecificationTemplate.moduleCourseId(courseId).and(spec), pageable));
     }
 
     @PostMapping("/courses/{courseId}/modules")
     @SneakyThrows
-    public ResponseEntity<Object> saveModule(@RequestBody @Valid ModuleDto moduleDto, @PathVariable UUID courseId){
+    public ResponseEntity<Object> saveModule(@RequestBody @Valid ModuleDto moduleDto, @PathVariable UUID courseId) {
 
         var moduleModel = new ModuleModel();
         moduleModel.aplicarDto(moduleDto);
@@ -56,20 +58,21 @@ public class ModuleController {
 
     @GetMapping("/modules")
     public ResponseEntity<Page<ModuleModel>> getAllModules(SpecificationTemplate.ModuleSpec spec,
-                                                           @PageableDefault(page = 0,size = 10,sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+                                                           @PageableDefault(page = 0, size = 10, sort = "id",
+                                                                   direction = Sort.Direction.ASC) Pageable pageable) {
 
         return ResponseEntity.status(HttpStatus.OK).body(moduleService.findAll(spec, pageable));
     }
 
     @GetMapping("/modules/{moduleId}")
-    public ResponseEntity<Object> getOneModule(@PathVariable(value = "moduleId")UUID moduleId) throws ObjectNotFoundException {
+    public ResponseEntity<Object> getOneModule(@PathVariable(value = "moduleId") UUID moduleId) throws ObjectNotFoundException {
 
         return ResponseEntity.status(HttpStatus.OK).body(moduleService.findById(moduleId));
     }
 
     @DeleteMapping("/modules/{moduleId}")
     @SneakyThrows
-    public ResponseEntity<Object> deleteModule(@PathVariable(value = "moduleId")UUID moduleId){
+    public ResponseEntity<Object> deleteModule(@PathVariable(value = "moduleId") UUID moduleId) {
 
         moduleService.delete(moduleId);
 
@@ -78,7 +81,7 @@ public class ModuleController {
 
     @PutMapping("/modules/{moduleId}")
     @SneakyThrows
-    public ResponseEntity<Object> updateModule(@PathVariable(value = "moduleId")UUID moduleId, @RequestBody @Valid ModuleDto moduleDto){
+    public ResponseEntity<Object> updateModule(@PathVariable(value = "moduleId") UUID moduleId, @RequestBody @Valid ModuleDto moduleDto) {
 
         ModuleModel moduleModel = moduleService.findById(moduleId);
         moduleModel.aplicarDto(moduleDto);

@@ -31,3 +31,35 @@ build/
 
 ### VS Code ###
 .vscode/
+/course/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+/notification/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+/course/.gradle/7.3/checksums/checksums.lock
+/notification/.gradle/7.3/checksums/checksums.lock
+/course/.gradle/7.3/dependencies-accessors/dependencies-accessors.lock
+/notification/.gradle/7.3/dependencies-accessors/dependencies-accessors.lock
+/authuser/.gradle/7.3/executionHistory/executionHistory.bin
+/course/.gradle/7.3/executionHistory/executionHistory.bin
+/course/.gradle/7.3/executionHistory/executionHistory.lock
+/notification/.gradle/7.3/executionHistory/executionHistory.lock
+/authuser/.gradle/file-system.probe
+/course/.gradle/file-system.probe
+/authuser/.gradle/7.3/fileHashes/fileHashes.bin
+/course/.gradle/7.3/fileHashes/fileHashes.bin
+/course/.gradle/7.3/fileHashes/fileHashes.lock
+/notification/.gradle/7.3/fileHashes/fileHashes.lock
+/authuser/.gradle/7.3/dependencies-accessors/gc.properties
+/authuser/.gradle/7.3/gc.properties
+/authuser/.gradle/vcs-1/gc.properties
+/course/.gradle/7.3/dependencies-accessors/gc.properties
+/course/.gradle/7.3/gc.properties
+/course/.gradle/vcs-1/gc.properties
+/notification/.gradle/7.3/dependencies-accessors/gc.properties
+/notification/.gradle/7.3/gc.properties
+/notification/.gradle/vcs-1/gc.properties
+/authuser/.gradle/7.3/fileChanges/last-build.bin
+/course/.gradle/7.3/fileChanges/last-build.bin
+/notification/.gradle/7.3/fileChanges/last-build.bin
+/authuser/.gradle/buildOutputCleanup/outputFiles.bin
+/course/.gradle/buildOutputCleanup/outputFiles.bin
+/authuser/.gradle/7.3/fileHashes/resourceHashesCache.bin
+/course/.gradle/7.3/fileHashes/resourceHashesCache.bin

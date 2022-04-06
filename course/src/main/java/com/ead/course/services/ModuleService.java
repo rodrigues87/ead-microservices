@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -71,5 +72,9 @@ public class ModuleService extends AbstractService<ModuleModel,SpecificationTemp
 
     public Object findAllModulesFromCourse(UUID courseId) {
         return moduleRepository.findModuleModelsByCourseId(courseId);
+    }
+
+    public Page<ModuleModel> findAllModulesFromCourse(Specification<ModuleModel> specification, Pageable pageable) {
+        return moduleRepository.findAll(specification,pageable);
     }
 }
