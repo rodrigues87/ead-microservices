@@ -3,11 +3,13 @@ package com.ead.course.services;
 import com.ead.course.ferramentas.Constantes;
 import com.ead.course.models.LessonModel;
 import com.ead.course.models.ModuleModel;
-import com.ead.course.repositories.LessonRepository;
 import com.ead.course.repositories.ModuleRepository;
+import com.ead.course.specifications.SpecificationTemplate;
 import javassist.tools.rmi.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,15 +18,15 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ModuleService extends AbstractService<ModuleModel>{
+public class ModuleService extends AbstractService<ModuleModel,SpecificationTemplate.ModuleSpec>{
 
     private final ModuleRepository moduleRepository;
     private final LessonService lessonService;
 
 
     @Override
-    public List<ModuleModel> findAll() {
-        return moduleRepository.findAll();
+    public Page<ModuleModel> findAll(SpecificationTemplate.ModuleSpec moduleSpec, Pageable pageable) {
+        return moduleRepository.findAll(moduleSpec,pageable);
     }
 
     @Override

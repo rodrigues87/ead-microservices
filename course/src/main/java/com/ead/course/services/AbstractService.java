@@ -1,18 +1,18 @@
 package com.ead.course.services;
 
 import com.ead.course.controllers.AbstractEntity;
-import com.ead.course.dtos.CourseDto;
-import com.ead.course.models.ModuleModel;
+import com.ead.course.specifications.SpecificationTemplate;
 import javassist.tools.rmi.ObjectNotFoundException;
-import lombok.SneakyThrows;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-public abstract class AbstractService<T> {
+public abstract class AbstractService<T,I> {
 
-    public abstract List<T> findAll();
+    public abstract Page<T> findAll(I spec, Pageable pageable);
 
     public abstract T save(T obj) throws ObjectNotFoundException;
 
