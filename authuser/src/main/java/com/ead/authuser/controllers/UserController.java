@@ -6,6 +6,7 @@ import com.ead.authuser.models.UserModel;
 import com.ead.authuser.services.UserService;
 import com.ead.authuser.specifications.SpecificationTemplate;
 import com.fasterxml.jackson.annotation.JsonView;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,7 @@ import java.util.UUID;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+@Log4j2
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/users")
@@ -38,10 +40,10 @@ public class UserController {
                                                        @PageableDefault(page = 0, size = 10, sort = "userId",
                                                                direction = Sort.Direction.ASC) Pageable pageable) {
 
-        Page<UserModel> userModelPage = userService.findAll(spec,pageable);
+        Page<UserModel> userModelPage = userService.findAll(spec, pageable);
 
-        if(!userModelPage.isEmpty()){
-            for (UserModel userModel : userModelPage.getContent()){
+        if (!userModelPage.isEmpty()) {
+            for (UserModel userModel : userModelPage.getContent()) {
                 userModel.add(linkTo(methodOn(UserController.class).findUserById(userModel.getUserId())).withSelfRel());
             }
         }
@@ -55,9 +57,10 @@ public class UserController {
         Optional<UserModel> userModel = userService.findById(userId);
         if (userModel.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(userModel.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
         }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+
 
     }
 
@@ -68,9 +71,10 @@ public class UserController {
         if (userModel.isPresent()) {
             userService.delete(userModel.get());
             return ResponseEntity.status(HttpStatus.OK).body("Usuário deletado com sucesso");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
         }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+
     }
 
     @PutMapping("/{userId}")
@@ -106,6 +110,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
         }
         if (!userModelOptional.get().getPassword().equals(userDto.getOldPassword())) {
+            log.warn("tentativa de verificar senha {}", userDto.getUserId());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Senhas não conferem");
 
         }

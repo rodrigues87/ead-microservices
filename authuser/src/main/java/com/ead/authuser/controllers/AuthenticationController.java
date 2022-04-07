@@ -35,13 +35,17 @@ public class AuthenticationController {
                                                @Validated(UserDto.UserView.RegistrationPost.class)
                                                @JsonView(UserDto.UserView.RegistrationPost.class)
                                                        UserDto userDto) {
+
         log.debug("POST registerUser userDto received: {}", userDto.toString());
 
         if (userService.existsByUsername(userDto.getUsername())) {
+            log.warn("Nome de usuário já está sendo usado: {}", userDto.getUsername());
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Nome de usuário já está sendo usado");
         }
 
         if (userService.existsByEmail(userDto.getEmail())) {
+            log.warn("Email de usuário já está sendo usado: {}", userDto.getEmail());
+
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email de usuário já está sendo usado");
         }
 
@@ -54,7 +58,7 @@ public class AuthenticationController {
         userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
 
         log.debug("POST registerUser userDto saved: {}", userModel.toString());
-
+        log.info("Usuário salvo com sucesso: {}", userModel.getUserId());
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.save(userModel));
 
