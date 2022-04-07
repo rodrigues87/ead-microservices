@@ -104,3 +104,16 @@
 ##SERVICE
     AO DECORAR O MÉTODO COM @Transactional GARANTIMOS QUE O MÉTODO IRÁ RETORNAR CASO HAJA ALGUM PROBLEMA NA PERSISTENCIA
     É INTERESSANTE USAR NO MOMENTO DE DELETAR ENTIDADES COM RELACIONAMENTO UM PARA MUITOS
+
+
+##TEMPO
+    As aplicações spring boot trazem por default o padrão ISO 8601 UTC
+
+##LOGS
+    slf4j ---> log4j
+    logBack sucessor do log4j, é a que o spring usa
+    log4j 2 traz todas as melhorias do loback
+
+
+### logging:
+    TRACE > DEBUG > INFO > WARNING > ERROR
