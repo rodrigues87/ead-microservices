@@ -51,4 +51,9 @@ public class CourseModel extends AbstractEntity {
     @Fetch(FetchMode.SUBSELECT)
     private Set<ModuleModel> modules;
 
+    @OneToMany(mappedBy = "course",fetch = FetchType.LAZY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<CourseUserModel> coursesUsers;
+
 }

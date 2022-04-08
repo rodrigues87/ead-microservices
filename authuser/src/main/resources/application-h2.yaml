@@ -19,10 +19,7 @@ spring:
     properties:
       hibernate:
         show_sql: true
-#para mostrar as cores do log no cmd
-  output:
-    ansi:
-      enabled: Always
+
 
 logging:
   level:

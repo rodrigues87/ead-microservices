@@ -31,14 +31,14 @@ public class CourseController {
     public ResponseEntity<Object> saveCourse(@RequestBody @Valid CourseDto courseDto) {
 
         var courseModel = new CourseModel();
-        BeanUtils.copyProperties(courseDto,courseModel);
+        BeanUtils.copyProperties(courseDto, courseModel);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(courseService.save(courseModel));
     }
 
     @DeleteMapping("/{courseId}")
     @SneakyThrows
-    public ResponseEntity<Object> deleteCourse(@PathVariable(value = "courseId")UUID courseId)  {
+    public ResponseEntity<Object> deleteCourse(@PathVariable(value = "courseId") UUID courseId) {
 
         courseService.delete(courseId);
 
@@ -48,7 +48,7 @@ public class CourseController {
 
     @PutMapping("/{courseId}")
     @SneakyThrows
-    public ResponseEntity<Object> updateCourse(@PathVariable(value = "courseId")UUID courseId, @RequestBody @Valid CourseDto courseDto){
+    public ResponseEntity<Object> updateCourse(@PathVariable(value = "courseId") UUID courseId, @RequestBody @Valid CourseDto courseDto) {
 
         CourseModel courseModel = courseService.findById(courseId);
         BeanUtils.copyProperties(courseDto, courseModel);
@@ -57,16 +57,25 @@ public class CourseController {
     }
 
     @GetMapping
-        public ResponseEntity<Page<CourseModel>> getAllCourses
+    public ResponseEntity<Page<CourseModel>> getAllCourses
             (SpecificationTemplate.CourseSpec spec,
-             @PageableDefault(page = 0,size = 10,sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+             @RequestParam(required = false)UUID userId) {
+
+
+        Page<CourseModel> courseModelPage = null;
+
+        if(userId != null){
+            courseModelPage = courseService.findAll(SpecificationTemplate.courseUserId(userId).and(spec), pageable);
+
+        }
 
         return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(spec, pageable));
     }
 
     @GetMapping("/{courseId}")
     @SneakyThrows
-    public ResponseEntity<Object> getOneCourse(@PathVariable(value = "courseId")UUID courseId){
+    public ResponseEntity<Object> getOneCourse(@PathVariable(value = "courseId") UUID courseId) {
 
         CourseModel courseModel = courseService.findById(courseId);
 

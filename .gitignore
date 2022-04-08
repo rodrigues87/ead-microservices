@@ -72,3 +72,9 @@ build/
 /authuser/.gradle/7.3/fileHashes/fileHashes.lock
 /authuser/.gradle/7.3/checksums/md5-checksums.bin
 /authuser/.gradle/7.3/checksums/sha1-checksums.bin
+/notification/.gradle/buildOutputCleanup/cache.properties
+/notification/.gradle/7.3/executionHistory/executionHistory.bin
+/notification/.gradle/file-system.probe
+/notification/.gradle/7.3/fileHashes/fileHashes.bin
+/notification/.gradle/buildOutputCleanup/outputFiles.bin
+/notification/.gradle/7.3/fileHashes/resourceHashesCache.bin

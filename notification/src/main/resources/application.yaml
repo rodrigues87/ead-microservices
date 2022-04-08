@@ -1,3 +1,8 @@
 spring:
   profiles:
     active: h2
+
+  #para mostrar as cores do log no cmd
+  output:
+    ansi:
+      enabled: Always
