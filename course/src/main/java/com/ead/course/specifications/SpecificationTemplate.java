@@ -52,7 +52,7 @@ public class SpecificationTemplate {
         });
     }
 
-    public static Specification<CourseUserModel> courseUserId(final UUID userId){
+    public static Specification<CourseModel> courseUserId(final UUID userId){
         return ((root, query, criteriaBuilder) -> {
             query.distinct(true);
             Join<CourseModel, CourseUserModel> courseProd = root.join("coursesUsers");

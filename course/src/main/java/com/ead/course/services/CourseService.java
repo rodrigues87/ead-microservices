@@ -13,6 +13,7 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +33,11 @@ public class CourseService extends AbstractService<CourseModel,SpecificationTemp
     public Page<CourseModel> findAll(SpecificationTemplate.CourseSpec spec, Pageable pageable) {
         return courseRepository.findAll(spec,pageable);
     }
+
+    public Page<CourseModel> findAllCoursesFromUser(Specification<CourseModel> specification, Pageable pageable) {
+        return courseRepository.findAll(specification,pageable);
+    }
+
 
     @Override
     public CourseModel save(CourseModel obj) {

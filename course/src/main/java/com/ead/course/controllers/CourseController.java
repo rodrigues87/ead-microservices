@@ -3,6 +3,7 @@ package com.ead.course.controllers;
 
 import com.ead.course.dtos.CourseDto;
 import com.ead.course.models.CourseModel;
+import com.ead.course.models.ModuleModel;
 import com.ead.course.services.CourseService;
 import com.ead.course.specifications.SpecificationTemplate;
 import lombok.SneakyThrows;
@@ -60,18 +61,22 @@ public class CourseController {
     public ResponseEntity<Page<CourseModel>> getAllCourses
             (SpecificationTemplate.CourseSpec spec,
              @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
-             @RequestParam(required = false)UUID userId) {
+             @RequestParam(required = false) UUID userId) {
 
 
         Page<CourseModel> courseModelPage = null;
 
-        if(userId != null){
-            courseModelPage = courseService.findAll(SpecificationTemplate.courseUserId(userId).and(spec), pageable);
+        if (userId != null) {
+            courseModelPage = courseService.findAllCoursesFromUser(SpecificationTemplate.courseUserId(userId).and(spec), pageable);
+
+        }else {
+            courseModelPage = courseService.findAll(spec,pageable);
 
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(spec, pageable));
+        return ResponseEntity.status(HttpStatus.OK).body(courseModelPage);
     }
+
 
     @GetMapping("/{courseId}")
     @SneakyThrows
