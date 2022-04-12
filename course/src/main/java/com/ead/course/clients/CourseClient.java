@@ -5,6 +5,7 @@ import com.ead.course.dtos.ResponsePageDto;
 import com.ead.course.services.UtilService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +24,8 @@ public class CourseClient {
     @Autowired
     RestTemplate restTemplate;
 
-    private String REQUEST_URI= "http://localhost:8087";
+    @Value("${ead.api.url.authuser}")
+    private String REQUEST_URI;
 
     public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable){
 

@@ -5,6 +5,7 @@ import com.ead.authuser.dtos.ResponsePageDto;
 import com.ead.authuser.services.UtilService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +24,8 @@ public class UserClient {
     @Autowired
     RestTemplate restTemplate;
 
-    private String REQUEST_URI= "http://localhost:8082";
+    @Value("${ead.api.url.course}")
+    private String REQUEST_URI;
 
     public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable){
 
@@ -44,6 +46,25 @@ public class UserClient {
         }
 
         return result.getBody();
+    }
+
+    public CourseDto findCourseById(UUID courseId){
+        CourseDto courseDto = null;
+        ResponseEntity<CourseDto> result = null;
+
+        String url = new UtilService().createUrl(courseId);
+
+        try {
+            ParameterizedTypeReference<CourseDto> responseType =
+                    new ParameterizedTypeReference<CourseDto>() {};
+
+            result = restTemplate.exchange(url, HttpMethod.GET, null, responseType);
+            courseDto = result.getBody();
+
+        }catch (Exception e){
+            log.error("Error request /courses {}", e);
+        }
+        return courseDto;
     }
 
 }
