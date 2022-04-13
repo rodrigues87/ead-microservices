@@ -27,10 +27,10 @@ public class UserCourseController {
     @Autowired
     UserCourseService userCourseService;
 
-    @Autowired
-
     @GetMapping("/users/{userId}/courses")
-    public ResponseEntity<Page<CourseDto>> getAllCoursesByuser(@PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC) Pageable pageable, @PathVariable(value = "userId") UUID userId) {
+    public ResponseEntity<Page<CourseDto>> getAllCoursesByuser
+            (@PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC) Pageable pageable,
+             @RequestParam(required = false) UUID userId) {
 
         return ResponseEntity.status(HttpStatus.OK).body(userClient.getAllCoursesByUser(userId,pageable));
 

@@ -46,7 +46,6 @@ public class UserController {
             userModelPage = userService.findAll(SpecificationTemplate.userCourseId(courseId).and(spec), pageable);
         }else {
             userModelPage = userService.findAll(spec, pageable);
-
         }
 
         if (!userModelPage.isEmpty()) {
