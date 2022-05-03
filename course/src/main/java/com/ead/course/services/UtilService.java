@@ -16,4 +16,8 @@ public class UtilService {
         return REQUEST_URI + "/users?courseId="+ courseId+ "&page=" + pageable.getPageNumber() + "&size=" + pageable.getPageSize()
                 +"&sort=" + pageable.getSort().toString().replaceAll(": ",",");
     }
+
+    public String createUrlFindById(UUID userId){
+        return REQUEST_URI + "/users?userId=" + userId;
+    }
 }

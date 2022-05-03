@@ -1,6 +1,6 @@
 package com.ead.authuser.controllers;
 
-import com.ead.authuser.clients.UserClient;
+import com.ead.authuser.clients.CourseClient;
 import com.ead.authuser.dtos.CourseDto;
 import com.ead.authuser.models.UserCourseModel;
 import com.ead.authuser.services.UserCourseService;
@@ -22,7 +22,7 @@ import java.util.UUID;
 public class UserCourseController {
 
     @Autowired
-    UserClient userClient;
+    CourseClient userClient;
 
     @Autowired
     UserCourseService userCourseService;
@@ -36,7 +36,7 @@ public class UserCourseController {
 
     }
 
-    @PostMapping("/user/{userId}/{courseId}")
+    @GetMapping("/user/{userId}/{courseId}")
     public ResponseEntity<Object> saveSubscriptionUserInCourse(@PathVariable UUID userId, UUID courseId){
 
         UserCourseModel userCourseModel = userCourseService.saveSubscriptionUserInCourse(userId,courseId);

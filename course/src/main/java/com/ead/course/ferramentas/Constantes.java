@@ -12,5 +12,5 @@ public class Constantes {
     public static final String LESSON_DELETADO = "Lesson deletado com sucesso";
 
 
-
+    public static final String USUARIO_NAO_ENCONTRADO = "Usuário não encontrado";
 }

@@ -1,24 +1,20 @@
 package com.ead.course.controllers;
 
 
-import com.ead.course.dtos.CourseDto;
-import com.ead.course.models.CourseModel;
-import com.ead.course.models.ModuleModel;
-import com.ead.course.services.CourseService;
-import com.ead.course.specifications.SpecificationTemplate;
-import lombok.SneakyThrows;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.ead.course.dtos.*;
+import com.ead.course.models.*;
+import com.ead.course.services.*;
+import com.ead.course.specifications.*;
+import lombok.*;
+import org.springframework.beans.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.data.domain.*;
+import org.springframework.data.web.*;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.UUID;
+import javax.validation.*;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)

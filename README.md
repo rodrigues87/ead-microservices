@@ -117,3 +117,6 @@
 
 ### logging:
     TRACE > DEBUG > INFO > WARNING > ERROR
+
+## Decorações
+    @Transactional decorano no método, permite a volta das ações executadas(ex: save) caso ocorra erro

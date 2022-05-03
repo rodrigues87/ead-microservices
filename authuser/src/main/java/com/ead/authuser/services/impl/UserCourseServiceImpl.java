@@ -1,6 +1,6 @@
 package com.ead.authuser.services.impl;
 
-import com.ead.authuser.clients.UserClient;
+import com.ead.authuser.clients.CourseClient;
 import com.ead.authuser.dtos.CourseDto;
 import com.ead.authuser.models.UserCourseModel;
 import com.ead.authuser.models.UserModel;
@@ -23,7 +23,7 @@ public class UserCourseServiceImpl implements UserCourseService {
     UserService userService;
 
     @Autowired
-    UserClient userClient;
+    CourseClient userClient;
 
     @Override
     public UserCourseModel saveSubscriptionUserInCourse(UUID userId, UUID courseId) {

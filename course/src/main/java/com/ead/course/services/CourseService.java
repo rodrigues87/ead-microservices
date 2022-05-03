@@ -1,5 +1,6 @@
 package com.ead.course.services;
 
+import com.ead.course.dtos.*;
 import com.ead.course.ferramentas.Constantes;
 import com.ead.course.models.CourseModel;
 import com.ead.course.models.LessonModel;
@@ -83,4 +84,5 @@ public class CourseService extends AbstractService<CourseModel,SpecificationTemp
     public void deleteAll(Set<CourseModel> models) {
         courseRepository.deleteAll(models);
     }
+
 }
