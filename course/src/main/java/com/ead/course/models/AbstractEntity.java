@@ -1,4 +1,4 @@
-package com.ead.course.controllers;
+package com.ead.course.models;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
