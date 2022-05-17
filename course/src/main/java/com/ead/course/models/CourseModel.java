@@ -1,20 +1,14 @@
 package com.ead.course.models;
 
-import com.ead.course.controllers.AbstractEntity;
-import com.ead.course.dtos.ModuleDto;
 import com.ead.course.enums.CourseLevel;
 import com.ead.course.enums.CourseStatus;
-import com.ead.course.ferramentas.Constantes;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import javax.persistence.*;
 import java.util.Set;

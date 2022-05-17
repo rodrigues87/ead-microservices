@@ -1,9 +1,7 @@
 package com.ead.course.services;
 
-import com.ead.course.controllers.AbstractEntity;
+import com.ead.course.models.AbstractEntity;
 import javassist.tools.rmi.ObjectNotFoundException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.Set;
 import java.util.UUID;

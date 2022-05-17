@@ -1,6 +1,5 @@
 package com.ead.course.models;
 
-import com.ead.course.controllers.AbstractEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
