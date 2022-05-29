@@ -1,7 +1,8 @@
 spring:
+  application:
+    name: ead-course-service
   profiles:
-    active: h2
-
+    active: postgress
   #para mostrar as cores do log no cmd
   output:
     ansi:
@@ -10,4 +11,11 @@ spring:
 ead:
   api:
     url:
-      authuser: 'http://localhost:8087'
+      authuser: 'http://ead-authuser-service'
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: 'http://localhost:8761/eureka'
+  instance:
+    hostname: localhost
