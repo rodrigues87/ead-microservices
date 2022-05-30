@@ -1,1 +1,29 @@
 
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ead-api-gateway
+  cloud:
+    gateway:
+      # aqui criamos uma rota para definir uma mudança de direcionamento caso haja qualquer requisição a partir de ead-authuser/
+      # Esta rota também precisa ser criada no service de authuser
+      routes:
+        - id: authuser-service
+          uri: lb://ead-authuser-service
+          predicates:
+            - Path=/ead-authuser/**
+
+        - id: course-service
+          uri: lb://ead-course-service
+          predicates:
+            - Path=/ead-course/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: 'http://localhost:8761/eureka'
+  instance:
+    hostname: localhost
+
